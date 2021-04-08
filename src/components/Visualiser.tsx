@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { Board } from "./Board"
 import { wait } from "../utils"
 import { backtracking } from "../algorithms/backtracking";
@@ -27,6 +27,9 @@ export const Visualiser = () => {
     // The delay in milliseconds between frames 
     const [delay, setDelay] = useState(INITIAL_DELAY_MILLIS);
 
+    // A delay ref that updates syncronously for changing the delay time in the middle of animations 
+    const delayRef = useRef(INITIAL_DELAY_MILLIS);
+
     // Given an algorithm, compute the list of frames and animate them by updating the state every `delay` millseconds
     async function animateAlgorithm(algorithm: Algorithm) {
         const algoImplementation = algorithmToImplementation.get(algorithm);
@@ -37,7 +40,7 @@ export const Visualiser = () => {
         for (let i = 0; i < animationFrames.length; i++) {
             setAnimationFrame(animationFrames[i]);
 
-            await wait(delay);
+            await wait(delayRef.current);
         }
 
         setAlgorithmRunning(false);
@@ -45,6 +48,7 @@ export const Visualiser = () => {
 
     function handleSetDelay(value: number) {
         setDelay(value);
+        delayRef.current = value;
     }
 
     function handleSetSize(size: number) {

@@ -10,7 +10,7 @@ export function backtracking(board: boolean[][]) {
     return animationFrames;
 }
 
-// Solves the N-Queens problem and return a list of frames to show how it did it
+// Solves the N-Queens problem and returns a list of frames to show how it did it
 function backtrackingRecurse(board: boolean[][], rowToPlaceAt: number, animationFrames: AnimationFrame[]) {
     if (rowToPlaceAt === board.length) {
         animationFrames.push(newAnimationFrame(board, "Solution found!"));

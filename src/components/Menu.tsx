@@ -37,7 +37,7 @@ export const Menu = ({ message, running, animateAlgo, size, delay, setDelay, set
             <h1 id="heading">N-Queens Visualiser</h1>
 
             <div id="controls">
-                <div>
+                <div style={{ visibility: controlsVisibility }} >
                     <Dropdown
                         initialItem={"Backtracking"}
                         content={new Map<string, () => void>([
@@ -48,7 +48,7 @@ export const Menu = ({ message, running, animateAlgo, size, delay, setDelay, set
                     />
                 </div>
 
-                <div className="slider-container" style={{ visibility: controlsVisibility }}>
+                <div className="slider-container">
                     <label htmlFor="speed-slider">
                         Animation Delay:
                     </label>
