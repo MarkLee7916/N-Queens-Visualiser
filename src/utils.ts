@@ -20,3 +20,7 @@ export function naturalNumberSetUntilN(N: number) {
 
     return nums;
 }
+
+export function naturalNumberListUntilN(N: number) {
+    return Array.from(naturalNumberSetUntilN(N));
+}

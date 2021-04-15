@@ -2,12 +2,13 @@ import React from "react";
 
 interface Props {
     isQueen: boolean
+    isInDomain: boolean
     row: number
     col: number
     screenSize: number
 }
 
-export const Tile = ({ isQueen, row, col, screenSize }: Props) => {
+export const Tile = ({ isQueen, isInDomain, row, col, screenSize }: Props) => {
     const tileBackgroundColor = getColorFromPos(row, col);
 
     const queenJSX = (
@@ -20,7 +21,9 @@ export const Tile = ({ isQueen, row, col, screenSize }: Props) => {
     const emptyJSX = <> </>;
 
     function getColorFromPos(row: number, col: number) {
-        if (row % 2 === col % 2) {
+        if (isInDomain) {
+            return "#00994d";
+        } else if (row % 2 === col % 2) {
             return "white";
         } else {
             return "gainsboro";

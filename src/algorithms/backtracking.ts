@@ -15,8 +15,6 @@ function backtrackingRecurse(board: boolean[][], rowToPlaceAt: number, animation
     if (rowToPlaceAt === board.length) {
         animationFrames.push(newAnimationFrame(board, "Solution found!"));
 
-        console.assert(isValidBoard(board));
-
         return true;
     }
 

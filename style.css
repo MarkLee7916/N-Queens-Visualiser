@@ -1,109 +1,109 @@
 * {
-  font-family: Helvetica-Neue, sans-serif;
+    font-family: Helvetica-Neue, sans-serif;
 }
 
 #app {
-  background-color: paleturquoise;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+    background-color: paleturquoise;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 #heading {
-  font-size: 5vmin;
+    font-size: 5vmin;
+}
+
+#color-codes {
+    font-size: 2vmin;
 }
 
 #controls {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-bottom: 4vh;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 4vh;
+}
+
+@media screen and (max-width: 600px) {
+    #controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #controls > * {
+        margin-top: 3vh;
+    }
 }
 
 .slider-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  font-size: 2vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 2vmin;
 }
 
 .slider-container > input {
-  width: 20vmin;
+    width: 20vmin;
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
+    display: none;
+    position: absolute;
 }
 
 .menu-button {
-  border: 2px solid black;
-  background-color: paleturquoise;
-  color: black;
-  font-size: 1vmax;
-  padding: 1.3vmax;
-  width: 15vmax;
-  border-radius: 10px;
+    border: 2px solid black;
+    background-color: paleturquoise;
+    color: black;
+    font-size: 1vmax;
+    padding: 1.3vmax;
+    width: 15vmax;
+    border-radius: 10px;
 }
 
 .menu-button:hover {
-  background-color: black;
-  color: paleturquoise;
-  cursor: pointer;
+    background-color: black;
+    color: paleturquoise;
+    cursor: pointer;
 }
 
 .dropdown-content-button,
 .dropdown-button {
-  display: block;
-  border-radius: 0px;
+    display: block;
+    border-radius: 0px;
 }
 
 #message {
-  font-size: 1.1vmax;
+    font-size: 1.1vmax;
+}
+
+#board {
+    border-collapse: collapse;
+    border: 0.05px solid black;
 }
 
 .tile {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.05px solid black;
 }
 
 .queen-number {
-  margin-bottom: 80%;
-  font-size: 2vmin;
+    margin-bottom: 80%;
+    font-size: 2vmin;
 }
 
 .queen-image {
-  height: 50%;
-  width: 50%;
-}
-
-#pause-play-menu {
-  margin-top: 2vh;
-  display: flex;
-  justify-content: space-around;
-  width: 40%;
-}
-
-#pause-play-menu > button {
-  margin-top: 2vh;
-  background-color: paleturquoise;
-  border: none;
-  font-size: 4vmax;
-  width: 4vmax;
-  outline: none;
-}
-
-#pause-play-menu > button:hover {
-  cursor: pointer;
-  opacity: 0.5;
+    height: 50%;
+    width: 50%;
 }

@@ -5,15 +5,22 @@ import { deepCopy } from "./utils";
 export interface AnimationFrame {
     board: boolean[][]
     message: string
+    rowToPlaceAt: number
+    domainInConsideration: number[]
 }
 
-// Return an animation frame with an empty board and no message
+// Return an animation frame with an empty board, no message and no domain information
 export function generateEmptyAnimationFrame(size: number) {
-    return { board: generateEmptyBoard(size), message: "" };
+    return { board: generateEmptyBoard(size), message: "", rowToPlaceAt: -1, domainInConsideration: [] };
 }
 
-// Return an animation frame with the specified board and message
-export function newAnimationFrame(board: boolean[][], message: string) {
-    return { board: deepCopy(board), message: message };
+// Return an animation frame with the specified board and message, arguments default to not displaying any domain info
+export function newAnimationFrame(board: boolean[][], message: string, domainInConsideration: number[] = [], rowToPlaceAt: number = -1) {
+    return {
+        board: deepCopy(board),
+        rowToPlaceAt: rowToPlaceAt,
+        message: message,
+        domainInConsideration: domainInConsideration,
+    };
 }
 

@@ -1,6 +1,6 @@
 import { AnimationFrame, newAnimationFrame } from "../animation";
-import { EMPTY_TILE, isValidBoard, isValidPlacement } from "../board";
-import { deepCopy, naturalNumberSetUntilN } from "../utils";
+import { EMPTY_TILE, isValidPlacement } from "../board";
+import { deepCopy, naturalNumberListUntilN, naturalNumberSetUntilN } from "../utils";
 
 // Driver function for the optimised backtracking solver
 export function optimisedBacktracking(board: boolean[][]) {
@@ -16,45 +16,48 @@ function backtrackingRecurse(board: boolean[][], unplacedRows: Set<number>, doma
     if (unplacedRows.size === 0) {
         animationFrames.push(newAnimationFrame(board, "Solution found!"));
 
-        console.assert(isValidBoard(board));
-
         return true;
     }
 
     const rowToPlaceAt = rowWithSmallestDomain(unplacedRows, domains);
     const domainForRowToPlaceAt = Array.from(domains.get(rowToPlaceAt));
 
-    animationFrames.push(newAnimationFrame(board, `Selecting most constrained row... ${rowToPlaceAt}`));
+    animationFrames.push(newAnimationFrame(board, `Selecting most constrained row... ${rowToPlaceAt}`, domainForRowToPlaceAt, rowToPlaceAt));
     unplacedRows.delete(rowToPlaceAt);
 
     if (domainForRowToPlaceAt.length === 0) {
-        animationFrames.push(newAnimationFrame(board, "Domain for this row is empty!"));
+        animationFrames.push(newAnimationFrame(board, "This row has no available tiles!"));
     }
 
     for (let i = 0; i < domainForRowToPlaceAt.length; i++) {
         const col = domainForRowToPlaceAt[i];
 
+        animationFrames.push(newAnimationFrame(board, "Placing queen...", domainForRowToPlaceAt, rowToPlaceAt));
         board[rowToPlaceAt][col] = true;
-        animationFrames.push(newAnimationFrame(board, "Attempting to place queen..."));
+        animationFrames.push(newAnimationFrame(board, "Placing queen...", domainForRowToPlaceAt, rowToPlaceAt));
 
-        if (isValidPlacement(board, rowToPlaceAt, col)) {
-            animationFrames.push(newAnimationFrame(board, "Placement is valid!"));
-            pruneDomains(rowToPlaceAt, domains, board);
-            animationFrames.push(newAnimationFrame(board, "Pruning domains of the other queens..."));
+        pruneDomains(rowToPlaceAt, domains, board, animationFrames);
 
-            if (backtrackingRecurse(board, unplacedRows, domains, animationFrames)) {
-                return true;
+        if (backtrackingRecurse(board, unplacedRows, domains, animationFrames)) {
+            return true;
+        }
+
+        animationFrames.push(newAnimationFrame(board, "Placements don't satisfy, reset available tiles..."));
+        setDefaultDomains(domains, board.length);
+
+        for (let row = 0; row < board.length; row++) {
+            if (row !== rowToPlaceAt) {
+                animationFrames.push(newAnimationFrame(board, `Resetting available tiles for row ${row}`, naturalNumberListUntilN(board.length), row));
             }
-
-        } else {
-            animationFrames.push(newAnimationFrame(board, "Placement is invalid, Try again!"));
         }
 
         board[rowToPlaceAt][col] = EMPTY_TILE;
-        setDefaultDomains(domains, board.length);
     }
 
-    animationFrames.push(newAnimationFrame(board, "No valid placement found, backtracking..."));
+    if (domainForRowToPlaceAt.length > 0) {
+        animationFrames.push(newAnimationFrame(board, "No valid placement found, backtracking..."));
+    }
+
     unplacedRows.add(rowToPlaceAt);
 }
 
@@ -70,16 +73,20 @@ function rowWithSmallestDomain(unplacedRows: Set<number>, domains: Map<number, S
 }
 
 // Given a row and a mapping between rows and domains, use that row to prune the domains of all the other rows
-function pruneDomains(rowToPlaceAt: number, domains: Map<number, Set<number>>, board: boolean[][]) {
+function pruneDomains(rowToPlaceAt: number, domains: Map<number, Set<number>>, board: boolean[][], animationFrames: AnimationFrame[]) {
     Array.from(domains.keys()).forEach(row => {
         if (row !== rowToPlaceAt) {
             const domainToPrune = domains.get(row);
+
+            animationFrames.push(newAnimationFrame(board, `Pruning available tiles of row ${row}...`, Array.from(domainToPrune), row));
 
             domainToPrune.forEach(col => {
                 if (!isValidPlacement(board, row, col)) {
                     domainToPrune.delete(col);
                 }
             });
+
+            animationFrames.push(newAnimationFrame(board, `Pruning available tiles of row ${row}...`, Array.from(domainToPrune), row));
         }
     });
 
@@ -121,6 +128,6 @@ function getDomainSizeAfterPrune(rowToPlaceAt: number, colToPlaceAt: number, dom
 
     board[rowToPlaceAt][colToPlaceAt] = true;
 
-    return totalDomainSize(pruneDomains(rowToPlaceAt, domains, board));
+    return totalDomainSize(pruneDomains(rowToPlaceAt, domains, board, []));
 }
 

@@ -67,7 +67,10 @@ export const Visualiser = () => {
                 setSize={handleSetSize}
             />
 
-            <Board board={animationFrame.board} />
+            <Board
+                board={animationFrame.board}
+                domain={animationFrame.domainInConsideration}
+                rowToPlaceAt={animationFrame.rowToPlaceAt} />
         </>
     )
 }

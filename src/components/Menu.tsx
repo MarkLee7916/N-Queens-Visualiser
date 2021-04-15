@@ -16,7 +16,7 @@ interface Props {
 const algorithmToDescription = new Map<Algorithm, string>([
     [Algorithm.Backtracking, "A barebones implementation of backtracking search"],
     [Algorithm.BruteForce, "Generates all possible boards where each row has a queen, and takes the first one that is valid"],
-    [Algorithm.OptimisedBacktracking, "Backtracking with forward checking and a heuristic for taking the least constrained variable"]
+    [Algorithm.OptimisedBacktracking, "Backtracking with forward checking and heuristics for taking the most constrained variable"]
 ]);
 
 export const Menu = ({ message, running, animateAlgo, size, delay, setDelay, setSize }: Props) => {
@@ -25,6 +25,8 @@ export const Menu = ({ message, running, animateAlgo, size, delay, setDelay, set
 
     // Hide controls when an algorithm is running to prevent user from breaking the animation
     const controlsVisibility = running ? "hidden" : "visible";
+
+    const colorCodeVisibility = algorithm === Algorithm.OptimisedBacktracking ? "visible" : "hidden";
 
     // When an algorithm is updated, check if it's a slow algorithm and update board size if needed
     useEffect(() => {
@@ -66,6 +68,8 @@ export const Menu = ({ message, running, animateAlgo, size, delay, setDelay, set
                         {`${delay}ms`}
                     </label>
                 </div>
+
+                <span id="color-codes" style={{ visibility: colorCodeVisibility }}>🟩 Not clashing with other queens </span>
 
                 <div className="slider-container" style={{ visibility: controlsVisibility }}>
                     <label htmlFor="size-slider">

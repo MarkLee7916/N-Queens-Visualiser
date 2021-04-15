@@ -19,7 +19,6 @@ export function bruteForceSearch(board: boolean[][]) {
     }
 
     return animationFrames;
-
 }
 
 // Return a list of all possible boards where each queen has its own row and there's exactly board.length queens

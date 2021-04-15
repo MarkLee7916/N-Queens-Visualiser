@@ -16,10 +16,7 @@ export const Dropdown = ({ initialItem, content }: Props) => {
         setContentDisplayed(!isContentDisplayed);
     }
 
-    /*
-        When user selects a dropdown item, notify parent component, render 
-        the item at the top of the dropdown menu and close the dropdown menu
-    */
+    // When user selects a dropdown item, notify parent component, render the item at the top of the dropdown menu and close the dropdown menu
     function handleContentButtonClick(item: string) {
         const notifyCallback = content.get(item);
 
